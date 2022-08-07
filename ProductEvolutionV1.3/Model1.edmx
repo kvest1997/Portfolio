@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="UserSet" EntityType="Model1.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserProfilSet" EntityType="Model1.Store.UserProfilSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorySearchSet" EntityType="Model1.Store.HistorySearchSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RateItemsSet" EntityType="Model1.Store.RateItemsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategorySet" EntityType="Model1.Store.CategorySet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserUserProfil" Association="Model1.Store.UserUserProfil">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="UserProfil" EntitySet="UserProfilSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserProfilHistorySearch" Association="Model1.Store.UserProfilHistorySearch">
+      <End Role="UserProfil" EntitySet="UserProfilSet" />
+      <End Role="HistorySearch" EntitySet="HistorySearchSet" />
+    </AssociationSet>
+    <AssociationSet Name="RateItemsHistorySearch" Association="Model1.Store.RateItemsHistorySearch">
+      <End Role="RateItems" EntitySet="RateItemsSet" />
+      <End Role="HistorySearch" EntitySet="HistorySearchSet" />
+    </AssociationSet>
+    <AssociationSet Name="RateItemsCategory" Association="Model1.Store.RateItemsCategory">
+      <End Role="RateItems" EntitySet="RateItemsSet" />
+      <End Role="Category" EntitySet="CategorySet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserStatus" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserProfil_UserProfilId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfilSet">
+    <Key>
+      <PropertyRef Name="UserProfilId" />
+    </Key>
+    <Property Name="UserProfilId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StatusWork" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Number" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorySearchSet">
+    <Key>
+      <PropertyRef Name="SearchId" />
+    </Key>
+    <Property Name="SearchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameSearch" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserProfil_UserProfilId" Type="int" Nullable="false" />
+    <Property Name="RateItems_RateItemsId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RateItemsSet">
+    <Key>
+      <PropertyRef Name="RateItemsId" />
+    </Key>
+    <Property Name="RateItemsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Category_CategoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategorySet">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="UserUserProfil">
+    <End Role="User" Type="Model1.Store.UserSet" Multiplicity="*" />
+    <End Role="UserProfil" Type="Model1.Store.UserProfilSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfil">
+        <PropertyRef Name="UserProfilId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserProfil_UserProfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserProfilHistorySearch">
+    <End Role="UserProfil" Type="Model1.Store.UserProfilSet" Multiplicity="1" />
+    <End Role="HistorySearch" Type="Model1.Store.HistorySearchSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfil">
+        <PropertyRef Name="UserProfilId" />
+      </Principal>
+      <Dependent Role="HistorySearch">
+        <PropertyRef Name="UserProfil_UserProfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RateItemsHistorySearch">
+    <End Role="RateItems" Type="Model1.Store.RateItemsSet" Multiplicity="1" />
+    <End Role="HistorySearch" Type="Model1.Store.HistorySearchSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RateItems">
+        <PropertyRef Name="RateItemsId" />
+      </Principal>
+      <Dependent Role="HistorySearch">
+        <PropertyRef Name="RateItems_RateItemsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RateItemsCategory">
+    <End Role="RateItems" Type="Model1.Store.RateItemsSet" Multiplicity="*" />
+    <End Role="Category" Type="Model1.Store.CategorySet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="RateItems">
+        <PropertyRef Name="Category_CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="Model1.User" />
+          <EntitySet Name="UserProfilSet" EntityType="Model1.UserProfil" />
+          <EntitySet Name="HistorySearchSet" EntityType="Model1.HistorySearch" />
+          <AssociationSet Name="UserUserProfil" Association="Model1.UserUserProfil">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="UserProfil" EntitySet="UserProfilSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserProfilHistorySearch" Association="Model1.UserProfilHistorySearch">
+            <End Role="UserProfil" EntitySet="UserProfilSet" />
+            <End Role="HistorySearch" EntitySet="HistorySearchSet" />
+          </AssociationSet>
+          <EntitySet Name="RateItemsSet" EntityType="Model1.RateItems" />
+          <AssociationSet Name="RateItemsHistorySearch" Association="Model1.RateItemsHistorySearch">
+            <End Role="RateItems" EntitySet="RateItemsSet" />
+            <End Role="HistorySearch" EntitySet="HistorySearchSet" />
+          </AssociationSet>
+          <EntitySet Name="CategorySet" EntityType="Model1.Category" />
+          <AssociationSet Name="RateItemsCategory" Association="Model1.RateItemsCategory">
+            <End Role="RateItems" EntitySet="RateItemsSet" />
+            <End Role="Category" EntitySet="CategorySet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="UserProfil" Relationship="Model1.UserUserProfil" FromRole="User" ToRole="UserProfil" />
+          <Property Name="UserStatus" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfil">
+          <Key>
+            <PropertyRef Name="UserProfilId" />
+          </Key>
+          <Property Name="UserProfilId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="StatusWork" Type="String" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" />
+          <Property Name="Age" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Model1.UserUserProfil" FromRole="UserProfil" ToRole="User" />
+          <NavigationProperty Name="HistorySearch" Relationship="Model1.UserProfilHistorySearch" FromRole="UserProfil" ToRole="HistorySearch" />
+        </EntityType>
+        <EntityType Name="HistorySearch">
+          <Key>
+            <PropertyRef Name="SearchId" />
+          </Key>
+          <Property Name="SearchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSearch" Type="String" Nullable="false" />
+          <Property Name="Price" Type="String" Nullable="false" />
+          <NavigationProperty Name="UserProfil" Relationship="Model1.UserProfilHistorySearch" FromRole="HistorySearch" ToRole="UserProfil" />
+          <NavigationProperty Name="RateItems" Relationship="Model1.RateItemsHistorySearch" FromRole="HistorySearch" ToRole="RateItems" />
+        </EntityType>
+        <Association Name="UserUserProfil">
+          <End Type="Model1.User" Role="User" Multiplicity="1" />
+          <End Type="Model1.UserProfil" Role="UserProfil" Multiplicity="1" />
+        </Association>
+        <Association Name="UserProfilHistorySearch">
+          <End Type="Model1.UserProfil" Role="UserProfil" Multiplicity="1" />
+          <End Type="Model1.HistorySearch" Role="HistorySearch" Multiplicity="*" />
+        </Association>
+        <EntityType Name="RateItems">
+          <Key>
+            <PropertyRef Name="RateItemsId" />
+          </Key>
+          <Property Name="RateItemsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rate" Type="String" Nullable="false" />
+          <NavigationProperty Name="HistorySearch" Relationship="Model1.RateItemsHistorySearch" FromRole="RateItems" ToRole="HistorySearch" />
+          <NavigationProperty Name="Category" Relationship="Model1.RateItemsCategory" FromRole="RateItems" ToRole="Category" />
+        </EntityType>
+        <Association Name="RateItemsHistorySearch">
+          <End Type="Model1.RateItems" Role="RateItems" Multiplicity="1" />
+          <End Type="Model1.HistorySearch" Role="HistorySearch" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="RateItems" Relationship="Model1.RateItemsCategory" FromRole="Category" ToRole="RateItems" />
+        </EntityType>
+        <Association Name="RateItemsCategory">
+          <End Type="Model1.RateItems" Role="RateItems" Multiplicity="1" />
+          <End Type="Model1.Category" Role="Category" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfilSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.UserProfil)">
+        <MappingFragment StoreEntitySet="UserProfilSet">
+          <ScalarProperty Name="UserProfilId" ColumnName="UserProfilId" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="StatusWork" ColumnName="StatusWork" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorySearchSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.HistorySearch)">
+        <MappingFragment StoreEntitySet="HistorySearchSet">
+          <ScalarProperty Name="SearchId" ColumnName="SearchId" />
+          <ScalarProperty Name="NameSearch" ColumnName="NameSearch" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RateItemsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.RateItems)">
+        <MappingFragment StoreEntitySet="RateItemsSet">
+          <ScalarProperty Name="RateItemsId" ColumnName="RateItemsId" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategorySet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Category)">
+        <MappingFragment StoreEntitySet="CategorySet">
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserUserProfil" TypeName="Model1.UserUserProfil" StoreEntitySet="UserSet">
+      <EndProperty Name="UserProfil">
+        <ScalarProperty Name="UserProfilId" ColumnName="UserProfil_UserProfilId" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="UserId" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserProfilHistorySearch" TypeName="Model1.UserProfilHistorySearch" StoreEntitySet="HistorySearchSet">
+      <EndProperty Name="UserProfil">
+        <ScalarProperty Name="UserProfilId" ColumnName="UserProfil_UserProfilId" />
+      </EndProperty>
+      <EndProperty Name="HistorySearch">
+        <ScalarProperty Name="SearchId" ColumnName="SearchId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RateItemsHistorySearch" TypeName="Model1.RateItemsHistorySearch" StoreEntitySet="HistorySearchSet">
+      <EndProperty Name="RateItems">
+        <ScalarProperty Name="RateItemsId" ColumnName="RateItems_RateItemsId" />
+      </EndProperty>
+      <EndProperty Name="HistorySearch">
+        <ScalarProperty Name="SearchId" ColumnName="SearchId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RateItemsCategory" TypeName="Model1.RateItemsCategory" StoreEntitySet="RateItemsSet">
+      <EndProperty Name="Category">
+        <ScalarProperty Name="CategoryId" ColumnName="Category_CategoryId" />
+      </EndProperty>
+      <EndProperty Name="RateItems">
+        <ScalarProperty Name="RateItemsId" ColumnName="RateItemsId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

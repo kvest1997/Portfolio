@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f2a4afc7fe354cb49bcf3e1e10b6cb50" Name="Diagram1" ZoomLevel="100" >
+        <EntityTypeShape EntityType="Model1.User" Width="1.5" PointX="4.75" PointY="1.875" />
+        <EntityTypeShape EntityType="Model1.UserProfil" Width="1.5" PointX="8.25" PointY="1.625" />
+        <EntityTypeShape EntityType="Model1.HistorySearch" Width="1.5" PointX="11.5" PointY="1.75" />
+        <AssociationConnector Association="Model1.UserUserProfil" />
+        <AssociationConnector Association="Model1.UserProfilHistorySearch" />
+        <EntityTypeShape EntityType="Model1.RateItems" Width="1.5" PointX="14.875" PointY="2" />
+        <AssociationConnector Association="Model1.RateItemsHistorySearch" />
+        <EntityTypeShape EntityType="Model1.Category" Width="1.5" PointX="14.75" PointY="5.125" />
+        <AssociationConnector Association="Model1.RateItemsCategory" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
